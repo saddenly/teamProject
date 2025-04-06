@@ -1,30 +1,22 @@
-package com.example.mieszkancy.armatavr.entity;
+package com.example.mieszkancy.armatavr.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
-@Document(collection = "users")
-@NoArgsConstructor
 @AllArgsConstructor
-public class User {
-    @Id
+@NoArgsConstructor
+public class UserDTO {
+
     private String id;
 
-    @Indexed(unique = true)
     private String username;
 
-    @Indexed(unique = true)
     private String email;
 
     private String passwordHash;
 
-    @CreatedDate
     private Instant createdAt;
 
     public String getId() {
@@ -65,5 +57,16 @@ public class User {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }

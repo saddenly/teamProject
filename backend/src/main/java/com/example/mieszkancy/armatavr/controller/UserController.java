@@ -1,11 +1,14 @@
 package com.example.mieszkancy.armatavr.controller;
 
+import com.example.mieszkancy.armatavr.dto.UserDTO;
 import com.example.mieszkancy.armatavr.entity.User;
-import com.example.mieszkancy.armatavr.repository.UserRepository;
+import com.example.mieszkancy.armatavr.mapper.UserMapper;
 import com.example.mieszkancy.armatavr.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,35 +17,48 @@ import java.util.Optional;
 @RequestMapping("/api/users")
 public class UserController {
 
+    private final UserService userService;
+    private final UserMapper userMapper;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService, UserMapper userMapper) {
+        this.userService = userService;
+        this.userMapper = userMapper;
+    }
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<List<UserDTO>> getUsers() {
         List<User> users = userService.getUsers();
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(users.stream().map(userMapper::toDto).toList());
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
-        User user = userService.getUserByUsername(username).orElseThrow();
-        return ResponseEntity.ok(user);
+    public ResponseEntity<UserDTO> getUserByUsername(@PathVariable String username) {
+        User user = userService.getUserByUsername(username).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format("User with username %s not found", username))
+        );
+        return ResponseEntity.ok(userMapper.toDto(user));
     }
 
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody User user) {
-        return ResponseEntity.ok(userService.saveUser(user));
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userMapper.toDto(userService.saveUser(userMapper.toEntity(userDTO))));
     }
 
     @DeleteMapping("/{username}")
-    public ResponseEntity<User> deleteUser(@PathVariable String username) {
-        User user = userService.getUserByUsername(username).orElseThrow();
+    public ResponseEntity<UserDTO> deleteUser(@PathVariable String username) {
+        User user = userService.getUserByUsername(username).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format("User with username %s not found", username))
+        );
         userService.deleteUser(user);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{username}")
-    public ResponseEntity<User> updateUser(@PathVariable String username, @RequestBody User user) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable String username, @RequestBody UserDTO userDTO) {
+        User user = userMapper.toEntity(userDTO);
         Optional<User> existingUserOpt = userService.getUserByUsername(username);
 
         if (existingUserOpt.isPresent()) {
@@ -52,7 +68,7 @@ public class UserController {
 
             User savedUser = userService.saveUser(user);
 
-            return ResponseEntity.ok(savedUser);
+            return ResponseEntity.ok(userMapper.toDto(savedUser));
         } else {
             return ResponseEntity.notFound().build();
         }

@@ -1,28 +1,20 @@
-package com.example.mieszkancy.armatavr.entity;
+package com.example.mieszkancy.armatavr.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+import org.bson.types.ObjectId;
 
 import java.time.Instant;
 
-@Document
-@NoArgsConstructor
 @AllArgsConstructor
-public class Score {
-    @Id
+@NoArgsConstructor
+public class ScoreDTO {
     private String id;
 
-    @Indexed
     private String userId;
 
-    @Field
     private int score;
 
-    @Indexed
     private Instant timestamp;
 
     public String getId() {
@@ -59,7 +51,7 @@ public class Score {
 
     @Override
     public String toString() {
-        return "Score{" +
+        return "ScoreDTO{" +
                 "id=" + id +
                 ", userId='" + userId + '\'' +
                 ", score=" + score +
