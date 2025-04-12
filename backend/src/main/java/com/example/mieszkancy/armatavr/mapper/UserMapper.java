@@ -10,9 +10,10 @@ public class UserMapper {
         User user = new User();
         user.setId(userDTO.getId());
         user.setUsername(userDTO.getUsername());
-        user.setEmail(userDTO.getEmail());
-        user.setPasswordHash(userDTO.getPasswordHash());
+        user.setLevelsCompleted(userDTO.getLevelsCompleted());
+        user.setCurrency(userDTO.getCurrency());
         user.setCreatedAt(userDTO.getCreatedAt());
+        user.setScores(userDTO.getScores());
         return user;
     }
 
@@ -20,9 +21,10 @@ public class UserMapper {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setPasswordHash(user.getPasswordHash());
+        userDTO.setLevelsCompleted(user.getLevelsCompleted());
+        userDTO.setCurrency(user.getCurrency());
         userDTO.setCreatedAt(user.getCreatedAt());
+        userDTO.setScores(user.getScores());
         return userDTO;
     }
 }

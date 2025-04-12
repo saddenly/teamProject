@@ -1,9 +1,11 @@
 package com.example.mieszkancy.armatavr.dto;
 
+import com.example.mieszkancy.armatavr.entity.Score;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,11 +15,13 @@ public class UserDTO {
 
     private String username;
 
-    private String email;
+    private int levelsCompleted;
 
-    private String passwordHash;
+    private int currency;
 
     private Instant createdAt;
+
+    private List<Score> scores;
 
     public String getId() {
         return id;
@@ -35,22 +39,6 @@ public class UserDTO {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
     public Instant getCreatedAt() {
         return createdAt;
     }
@@ -59,14 +47,38 @@ public class UserDTO {
         this.createdAt = createdAt;
     }
 
+    public int getLevelsCompleted() {
+        return levelsCompleted;
+    }
+
+    public void setLevelsCompleted(int levelsCompleted) {
+        this.levelsCompleted = levelsCompleted;
+    }
+
+    public int getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(int currency) {
+        this.currency = currency;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", passwordHash='" + passwordHash + '\'' +
+                ", levelsCompleted=" + levelsCompleted +
+                ", currency=" + currency +
                 ", createdAt=" + createdAt +
                 '}';
+    }
+
+    public List<Score> getScores() {
+        return scores;
+    }
+
+    public void setScores(List<Score> scores) {
+        this.scores = scores;
     }
 }

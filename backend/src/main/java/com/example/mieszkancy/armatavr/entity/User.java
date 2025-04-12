@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
+import java.util.List;
 
 @Document(collection = "users")
 @NoArgsConstructor
@@ -19,13 +20,14 @@ public class User {
     @Indexed(unique = true)
     private String username;
 
-    @Indexed(unique = true)
-    private String email;
+    private int levelsCompleted;
 
-    private String passwordHash;
+    private int currency;
 
     @CreatedDate
     private Instant createdAt;
+
+    private List<Score> scores;
 
     public String getId() {
         return id;
@@ -43,27 +45,46 @@ public class User {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
     public Instant getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public int getLevelsCompleted() {
+        return levelsCompleted;
+    }
+
+    public void setLevelsCompleted(int levelsCompleted) {
+        this.levelsCompleted = levelsCompleted;
+    }
+
+    public int getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(int currency) {
+        this.currency = currency;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", levelsCompleted=" + levelsCompleted +
+                ", currency=" + currency +
+                ", createdAt=" + createdAt +
+                '}';
+    }
+
+    public List<Score> getScores() {
+        return scores;
+    }
+
+    public void setScores(List<Score> scores) {
+        this.scores = scores;
     }
 }
