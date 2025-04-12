@@ -2,35 +2,24 @@ package com.example.mieszkancy.armatavr.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
 
 import java.time.Instant;
 
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScoreDTO {
-    private String id;
-
-    private String userId;
+    private int levelNumber;
 
     private int score;
 
     private Instant timestamp;
 
-    public String getId() {
-        return id;
+    public int getLevelNumber() {
+        return levelNumber;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setLevelNumber(int levelNumber) {
+        this.levelNumber = levelNumber;
     }
 
     public int getScore() {
@@ -52,8 +41,7 @@ public class ScoreDTO {
     @Override
     public String toString() {
         return "ScoreDTO{" +
-                "id=" + id +
-                ", userId='" + userId + '\'' +
+                "levelNumber=" + levelNumber +
                 ", score=" + score +
                 ", timestamp=" + timestamp +
                 '}';
