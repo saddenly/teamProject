@@ -20,6 +20,8 @@ public class User {
     @Indexed(unique = true)
     private String username;
 
+    private String password;
+
     private int levelsCompleted;
 
     private int currency;
@@ -86,5 +88,13 @@ public class User {
 
     public void setScores(List<Score> scores) {
         this.scores = scores;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
