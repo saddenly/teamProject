@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class ScoreMapper {
     public Score toEntity(ScoreDTO scoreDTO) {
         Score score = new Score();
+        score.setId(scoreDTO.getId());
         score.setLevelNumber(scoreDTO.getLevelNumber());
         score.setScore(scoreDTO.getScore());
         score.setTimestamp(scoreDTO.getTimestamp());
@@ -16,6 +17,7 @@ public class ScoreMapper {
 
     public ScoreDTO toDto(Score score) {
         ScoreDTO scoreDTO = new ScoreDTO();
+        scoreDTO.setId(score.getId());
         scoreDTO.setLevelNumber(score.getLevelNumber());
         scoreDTO.setScore(score.getScore());
         scoreDTO.setTimestamp(score.getTimestamp());

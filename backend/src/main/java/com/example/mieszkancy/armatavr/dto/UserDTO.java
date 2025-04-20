@@ -63,6 +63,14 @@ public class UserDTO {
         this.currency = currency;
     }
 
+    public List<Score> getScores() {
+        return scores;
+    }
+
+    public void setScores(List<Score> scores) {
+        this.scores = scores;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
@@ -72,13 +80,5 @@ public class UserDTO {
                 ", currency=" + currency +
                 ", createdAt=" + createdAt +
                 '}';
-    }
-
-    public List<Score> getScores() {
-        return scores;
-    }
-
-    public void setScores(List<Score> scores) {
-        this.scores = scores;
     }
 }

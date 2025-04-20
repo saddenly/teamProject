@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "users")
@@ -29,7 +30,7 @@ public class User {
     @CreatedDate
     private Instant createdAt;
 
-    private List<Score> scores;
+    private List<Score> scores = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -71,17 +72,6 @@ public class User {
         this.currency = currency;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", levelsCompleted=" + levelsCompleted +
-                ", currency=" + currency +
-                ", createdAt=" + createdAt +
-                '}';
-    }
-
     public List<Score> getScores() {
         return scores;
     }
@@ -96,5 +86,18 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", levelsCompleted=" + levelsCompleted +
+                ", currency=" + currency +
+                ", createdAt=" + createdAt +
+                ", scores=" + scores +
+                '}';
     }
 }

@@ -21,17 +21,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    @Autowired
     private JwtFilter jwtFilter;
 
-    @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    public SecurityConfig(JwtFilter jwtFilter, UserDetailsService userDetailsService) {
+        this.jwtFilter = jwtFilter;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
+                        .requestMatchers("/api/auth/login").permitAll()
                         .anyRequest().authenticated()).
                 httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -8,6 +8,8 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScoreDTO {
+    private String id;
+
     private int levelNumber;
 
     private int score;
@@ -38,10 +40,19 @@ public class ScoreDTO {
         this.timestamp = timestamp;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "ScoreDTO{" +
-                "levelNumber=" + levelNumber +
+                "id='" + id + '\'' +
+                ", levelNumber=" + levelNumber +
                 ", score=" + score +
                 ", timestamp=" + timestamp +
                 '}';
