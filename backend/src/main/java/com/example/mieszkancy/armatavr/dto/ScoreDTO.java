@@ -1,24 +1,27 @@
-package com.example.mieszkancy.armatavr.entity;
+package com.example.mieszkancy.armatavr.dto;
 
 import lombok.AllArgsConstructor;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
-@Document
 @AllArgsConstructor
-public class Score {
+@NoArgsConstructor
+public class ScoreDTO {
     private String id;
 
     private int levelNumber;
 
     private int score;
 
-    @Indexed
     private Instant timestamp;
 
-    public Score() {
+    public int getLevelNumber() {
+        return levelNumber;
+    }
+
+    public void setLevelNumber(int levelNumber) {
+        this.levelNumber = levelNumber;
     }
 
     public int getScore() {
@@ -37,14 +40,6 @@ public class Score {
         this.timestamp = timestamp;
     }
 
-    public int getLevelNumber() {
-        return levelNumber;
-    }
-
-    public void setLevelNumber(int levelNumber) {
-        this.levelNumber = levelNumber;
-    }
-
     public String getId() {
         return id;
     }
@@ -55,7 +50,7 @@ public class Score {
 
     @Override
     public String toString() {
-        return "Score{" +
+        return "ScoreDTO{" +
                 "id='" + id + '\'' +
                 ", levelNumber=" + levelNumber +
                 ", score=" + score +

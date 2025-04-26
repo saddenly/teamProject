@@ -1,36 +1,27 @@
-package com.example.mieszkancy.armatavr.entity;
+package com.example.mieszkancy.armatavr.dto;
 
+import com.example.mieszkancy.armatavr.entity.Score;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
-@Document(collection = "users")
-@NoArgsConstructor
 @AllArgsConstructor
-public class User {
-    @Id
+@NoArgsConstructor
+public class UserDTO {
+
     private String id;
 
-    @Indexed(unique = true)
     private String username;
-
-    private String password;
 
     private int levelsCompleted;
 
     private int currency;
 
-    @CreatedDate
     private Instant createdAt;
 
-    private List<Score> scores = new ArrayList<>();
+    private List<Score> scores;
 
     public String getId() {
         return id;
@@ -80,24 +71,14 @@ public class User {
         this.scores = scores;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDTO{" +
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", levelsCompleted=" + levelsCompleted +
                 ", currency=" + currency +
                 ", createdAt=" + createdAt +
-                ", scores=" + scores +
                 '}';
     }
 }
