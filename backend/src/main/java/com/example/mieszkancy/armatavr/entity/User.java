@@ -25,7 +25,7 @@ public class User {
 
     private int levelsCompleted;
 
-    private int currency;
+    private int money;
 
     @CreatedDate
     private Instant createdAt;
@@ -64,12 +64,12 @@ public class User {
         this.levelsCompleted = levelsCompleted;
     }
 
-    public int getCurrency() {
-        return currency;
+    public int getMoney() {
+        return money;
     }
 
-    public void setCurrency(int currency) {
-        this.currency = currency;
+    public void setMoney(int money) {
+        this.money = money;
     }
 
     public List<Score> getScores() {
@@ -95,7 +95,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", levelsCompleted=" + levelsCompleted +
-                ", currency=" + currency +
+                ", currency=" + money +
                 ", createdAt=" + createdAt +
                 ", scores=" + scores +
                 '}';

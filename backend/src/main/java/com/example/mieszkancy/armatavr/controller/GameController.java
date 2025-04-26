@@ -10,9 +10,11 @@ import com.example.mieszkancy.armatavr.mapper.ScoreMapper;
 import com.example.mieszkancy.armatavr.mapper.UserMapper;
 import com.example.mieszkancy.armatavr.repository.UserRepository;
 import com.example.mieszkancy.armatavr.service.ScoreService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -43,29 +45,33 @@ public class GameController {
     }
 
     @PatchMapping("/progress")
-    public ResponseEntity<UserDTO> updateProfile(@CurrentUser User user,
-                                                 @RequestBody UserProgressPatchDTO patchDTO) {
+    public ResponseEntity<?> updateProfile(@CurrentUser User user,
+                                           @RequestBody @Valid UserProgressPatchDTO patchDTO,
+                                           BindingResult bindingResult) {
         Optional<User> optional = userRepository.findUserByUsername(user.getUsername());
         if (optional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        if (bindingResult.hasErrors()) {
+            return badRequest(bindingResult);
+        }
 
         User userToUpdate = optional.get();
-
-        if (patchDTO.getCurrency() != 0) {
-            userToUpdate.setCurrency(patchDTO.getCurrency());
-        }
-        if (patchDTO.getLevelsCompleted() != 0) {
-            userToUpdate.setLevelsCompleted(patchDTO.getLevelsCompleted());
-        }
+        userToUpdate.setMoney(patchDTO.getMoney());
+        userToUpdate.setLevelsCompleted(patchDTO.getLevelsCompleted());
         userRepository.save(userToUpdate);
         return ResponseEntity.ok(userMapper.toDto(userToUpdate));
     }
 
 
     @PostMapping("/scores")
-    public ResponseEntity<ScoreDTO> saveScore(@RequestBody ScoreDTO scoreDTO,
-                                              @CurrentUser User user) {
+    public ResponseEntity<?> saveScore(@RequestBody @Valid ScoreDTO scoreDTO,
+                                       BindingResult bindingResult,
+                                       @CurrentUser User user) {
+        if (bindingResult.hasErrors()) {
+            return badRequest(bindingResult);
+        }
+
         scoreDTO.setTimestamp(Instant.now());
 
         Score savedScore = scoreService.saveScore(scoreMapper.toEntity(scoreDTO), user);
@@ -80,8 +86,19 @@ public class GameController {
     }
 
     @GetMapping("/scores/{level}")
-    public ResponseEntity<List<ScoreDTO>> getScore(@PathVariable int level, @CurrentUser User user) {
-        return ResponseEntity.ok(user.getScores().stream().filter(score -> score.getLevelNumber() == level)
-                .map(scoreMapper::toDto).toList());
+    public ResponseEntity<?> getScore(@PathVariable int level, @CurrentUser User user) {
+        if (level >= 1)
+            return ResponseEntity.ok(user.getScores().stream().filter(score -> score.getLevelNumber() == level)
+                    .map(scoreMapper::toDto).toList());
+        else
+            return ResponseEntity.badRequest().body("Level cannot be lower that 0");
+    }
+
+    private ResponseEntity<?> badRequest(BindingResult bindingResult) {
+        List<String> errors = bindingResult.getFieldErrors()
+                .stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .toList();
+        return ResponseEntity.badRequest().body(errors);
     }
 }

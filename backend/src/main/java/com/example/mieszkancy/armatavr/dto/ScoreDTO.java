@@ -1,5 +1,7 @@
 package com.example.mieszkancy.armatavr.dto;
 
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -10,8 +12,10 @@ import java.time.Instant;
 public class ScoreDTO {
     private String id;
 
+    @Positive
     private int levelNumber;
 
+    @PositiveOrZero
     private int score;
 
     private Instant timestamp;

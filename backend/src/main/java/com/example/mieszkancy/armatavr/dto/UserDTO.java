@@ -1,6 +1,8 @@
 package com.example.mieszkancy.armatavr.dto;
 
 import com.example.mieszkancy.armatavr.entity.Score;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -13,11 +15,14 @@ public class UserDTO {
 
     private String id;
 
+    @NotBlank(message = "Username cannot be blank")
     private String username;
 
+    @PositiveOrZero
     private int levelsCompleted;
 
-    private int currency;
+    @PositiveOrZero
+    private int money;
 
     private Instant createdAt;
 
@@ -55,12 +60,12 @@ public class UserDTO {
         this.levelsCompleted = levelsCompleted;
     }
 
-    public int getCurrency() {
-        return currency;
+    public int getMoney() {
+        return money;
     }
 
-    public void setCurrency(int currency) {
-        this.currency = currency;
+    public void setMoney(int money) {
+        this.money = money;
     }
 
     public List<Score> getScores() {
@@ -77,7 +82,7 @@ public class UserDTO {
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
                 ", levelsCompleted=" + levelsCompleted +
-                ", currency=" + currency +
+                ", currency=" + money +
                 ", createdAt=" + createdAt +
                 '}';
     }

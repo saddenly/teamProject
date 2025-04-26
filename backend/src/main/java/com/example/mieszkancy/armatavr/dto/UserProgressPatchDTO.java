@@ -1,5 +1,7 @@
 package com.example.mieszkancy.armatavr.dto;
 
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UserProgressPatchDTO {
+    @Positive
     private int levelsCompleted;
 
-    private int currency;
+    @PositiveOrZero
+    private int money;
 }
