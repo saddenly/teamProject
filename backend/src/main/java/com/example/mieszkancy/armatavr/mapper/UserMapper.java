@@ -11,7 +11,7 @@ public class UserMapper {
         user.setId(userDTO.getId());
         user.setUsername(userDTO.getUsername());
         user.setLevelsCompleted(userDTO.getLevelsCompleted());
-        user.setCurrency(userDTO.getCurrency());
+        user.setMoney(userDTO.getMoney());
         user.setCreatedAt(userDTO.getCreatedAt());
         user.setScores(userDTO.getScores());
         return user;
@@ -22,7 +22,7 @@ public class UserMapper {
         userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
         userDTO.setLevelsCompleted(user.getLevelsCompleted());
-        userDTO.setCurrency(user.getCurrency());
+        userDTO.setMoney(user.getMoney());
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setScores(user.getScores());
         return userDTO;

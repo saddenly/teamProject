@@ -12,11 +12,15 @@ import java.util.Optional;
 @Service
 public class ScoreService {
 
-    @Autowired
-    private ScoreRepository scoreRepository;
+    private final ScoreRepository scoreRepository;
+
+    private final UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    public ScoreService(ScoreRepository scoreRepository, UserRepository userRepository) {
+        this.scoreRepository = scoreRepository;
+        this.userRepository = userRepository;
+    }
 
     public Optional<Score> getScoreById(String id) {
         return scoreRepository.findById(id);
